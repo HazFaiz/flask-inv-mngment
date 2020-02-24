@@ -11,6 +11,7 @@ lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
 peewee==3.13.1
+peewee-db-evolve==3.7.3
 psycopg2-binary==2.8.4
 pycodestyle==2.5.0
 pylint==2.4.4
