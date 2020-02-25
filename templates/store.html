@@ -1,5 +1,8 @@
 {% extends "_layout.html" %}
 {% block content %}
+{% for error in errors if errors|length > 0 %}
+<li>{{error}}</li>
+{% endfor %}
 <h1>Store</h1>
 
 <form method="post" action="{{url_for('create_store')}}">

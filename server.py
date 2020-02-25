@@ -38,6 +38,7 @@ def destroy_store(id):
     # select_store = request.form.get("deletestore")  # this will get id
     store = Store.get_by_id(id)
     store.delete_instance(recursive=True)
+    flash(f"Sucessfully deleted {store.name}")
     return redirect(url_for("index_stores"))
 # ------------------ LIST INFORMATION FOR A PARTICULAR STORE & UPDATE----------
 
@@ -80,7 +81,7 @@ def create_store():
         return redirect(url_for("new_store"))
     else:
         flash("That name is already taken")
-        return render_template("store.html")
+        return render_template("store.html", errors=store.errors)
 
 # ----------------------- FORM FOR ADDING WAREHOUSE ----------------
 #
