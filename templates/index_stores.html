@@ -1,0 +1,55 @@
+{% extends "_layout.html" %}
+{% block content %}
+<h1>Stores</h1>
+
+<!-- List all stores in a table format -->
+<!-- Implement the view functions (it should make a query to the database)
+Return the data to the template
+Create a template for each page and render them accordingly -->
+<!-- <table>
+    <tbody>
+        {% for name in sname %}
+        <tr>
+            <td>{{ name.name }}</a></td></br>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table> -->
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Store name</th>
+            <th scope="col">Number of warehouses</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for name in sname%}
+        <tr>
+            <td>{{name.name}}</th>
+            <td>{{name.warehouses | length}}</th>
+                <!-- warehouses is the backref in Warehouse connecting to Store. Refer to code below. so far just 1 -->
+                <!-- name.warehouses is basically a list. can use | length to get the number of occurences in it -->
+                <!-- https://jinja.palletsprojects.com/en/2.11.x/templates/#length -->
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<!-- {% for name in sname%}
+{{name.name}}
+{% endfor %} -->
+
+{% endblock %}
+
+<!-- >>> sname = Store.select().join(Warehouse).where(Store.name == "Meng's Camera Store")
+>>> for name in sname:
+... name.warehouses
+...
+<peewee.ModelSelect object at 0x000000000409C7C8>
+    >>> sname = Store.select().join(Warehouse).where(Store.name == "My Store")
+    >>> for name in sname:
+    ... name.warehouses
+    ...
+    >>> -->

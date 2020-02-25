@@ -26,11 +26,25 @@ def migrate():  # new
 def index():
     return render_template('index.html')
 
-# FORM FOR ADDING STORE
+# ------------------ LIST ALL STORES IN A TABLE FORMAT ----------
+@app.route("/stores")
+def index_stores():
+    sname = Store.select()
+    return render_template('index_stores.html', sname=sname)
+
+
+# ------------------ LIST INFORMATION FOR A PARTICULAR STORE ----------
+
+@app.route('/store/<id>')
+def show_store(id):
+    sname = Store.get(id=id)
+    return render_template('show_store.html', sname=sname)
+
+    # ------------------------- FORM FOR ADDING STORE ------------
 
 
 @app.route("/store", methods=["GET"])
-def show_store():
+def new_store():
     return render_template('store.html')  # JUST RENDERS STORE>HTML
 
 
@@ -42,13 +56,13 @@ def create_store():
 
     if store.save():
         flash(f"Saved store: {store_name}")
-        return redirect(url_for("show_store"))
+        return redirect(url_for("new_store"))
     else:
         flash("That name is already taken")
         return render_template("store.html")
 
-
-# FORM FOR ADDING WAREHOUSE
+# ----------------------- FORM FOR ADDING WAREHOUSE ----------------
+#
 # 1.The warehouse creation form needs to have a dropdown of stores to select from
 #     The view function that renders the form needs to retrieve all stores
 #     We then pass all the stores to the template to be displayed as selection options in the warehouse form
@@ -73,13 +87,14 @@ def create_warehouse():
     storeid = request.form.get("storeid")
     warehouseloc = request.form.get("warehouse_location")
     whouse = Warehouse(location=warehouseloc, store_id=storeid)
-
     if whouse.save():
         flash(f"Warehouse {warehouseloc} saved at Store {storeid}")
         return redirect(url_for("new_warehouse"))
     else:
         flash("That name is already taken")
         return render_template("warehouse.html")
+
+# ------------------------------------------------------
 
 
 if __name__ == '__main__':

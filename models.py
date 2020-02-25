@@ -7,29 +7,30 @@ db = PostgresqlExtDatabase(os.getenv('DATABASE'))
 
 
 class BaseModel(pw.Model):
-   created_at = pw.DateTimeField(default=datetime.datetime.now)
-   updated_at = pw.DateTimeField(default=datetime.datetime.now)
+    created_at = pw.DateTimeField(default=datetime.datetime.now)
+    updated_at = pw.DateTimeField(default=datetime.datetime.now)
 
-   def save(self, *args, **kwargs):
-       self.updated_at = datetime.datetime.now()
-       return super(BaseModel, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        self.updated_at = datetime.datetime.now()
+        return super(BaseModel, self).save(*args, **kwargs)
 
-   class Meta:
-       database = db
-       legacy_table_names = False
+    class Meta:
+        database = db
+        legacy_table_names = False
 
 
 class Store(BaseModel):
-   name = pw.CharField(unique=True)
+    name = pw.CharField(unique=True)
 
 
 class Warehouse(BaseModel):
-   store = pw.ForeignKeyField(Store, backref='warehouses', unique=True)
-   location = pw.TextField()
+    # unique true makes it so that only 1 warehouse can use a particular store. so now 1 store can only have 1 warehouse. removing unique turns it into 1 store can have many warehouses .i.e. any number of warehouses can share the same store
+    store = pw.ForeignKeyField(Store, backref='warehouses', unique=True)
+    location = pw.TextField()
 
 
 class Product(BaseModel):
-   name = pw.CharField(index=True)
-   description = pw.TextField()
-   warehouse = pw.ForeignKeyField(Warehouse, backref='products')
-   color = pw.CharField(null=True)
+    name = pw.CharField(index=True)
+    description = pw.TextField()
+    warehouse = pw.ForeignKeyField(Warehouse, backref='products')
+    color = pw.CharField(null=True)
