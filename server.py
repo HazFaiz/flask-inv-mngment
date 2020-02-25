@@ -33,13 +33,27 @@ def index_stores():
     return render_template('index_stores.html', sname=sname)
 
 
-# ------------------ LIST INFORMATION FOR A PARTICULAR STORE ----------
+# ------------------ LIST INFORMATION FOR A PARTICULAR STORE & UPDATE----------
 
-@app.route('/store/<id>')
+@app.route('/store/<id>', methods=["GET"])
 def show_store(id):
     sname = Store.get(id=id)
     return render_template('show_store.html', sname=sname)
 
+
+@app.route('/store/<id>', methods=["POST"])  # POST REQUEST TO UPDATE NAME
+def update_store(id):
+    old_name = Store.get(id=id).name
+    new_store_name = Store.update(name=request.form.get(
+        "name")).where(Store.name == old_name)
+
+    if new_store_name.execute():
+        flash(f"Successfully updated")
+        # have to pass in id as id, since def show_store(id):
+        return redirect(url_for("show_store", id=id))
+    else:
+        flash("That name is already taken")
+        return render_template("show_store.html")
     # ------------------------- FORM FOR ADDING STORE ------------
 
 

@@ -4,7 +4,24 @@
 <h2>Number of warehouses</h2>
 <h3>{{sname.warehouses | length}}</h3>
 
+<!-- ----------------UPDATE NEW STORE NAME FUNCTIONALITY---------- -->
+<!-- This is how the flow should work:
 
+User visits http://localhost:5000/store/1 *substitute 1 with any other IDs
+User sees a form with information about store on that page
+User makes a change to the store name through the form
+When user clicks update (the form's button), the database is updated and user is redirected back to the show page for
+store 1 -->
+
+
+<form style="margin:30px" method="post" action="{{url_for('update_store', id=sname.id)}}">
+    <!-- #only works when this is here -->
+    <div class="form-group">
+        <label for="Store">Store Name:</label>
+        <input type='text' name='name' class="form-control" value="{{sname.name}}" />`
+    </div>
+    <button type="submit" class="btn btn-primary">Edit Store</button>
+</form>
 
 
 {% endblock %}
