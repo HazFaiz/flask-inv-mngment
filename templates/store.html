@@ -2,14 +2,15 @@
 {% block content %}
 <h1>Store</h1>
 
-<form method="post" action="{{url_for('create')}}">
+<form method="post" action="{{url_for('create_store')}}">
+    <!-- #only works when this is here -->
     <div class="form-group">
-        <label for="Store"></label>
+        <label for="Store">Store</label>
         <input type="text" name="store_name" />
     </div>
-
     <button type="submit" class="btn btn-primary">Add Store</button>
 </form>
+
 
 {% if store_name %}
 <p>New Store: {{store_name}}</p>

@@ -1,0 +1,48 @@
+{% extends "_layout.html" %}
+{% block content %}
+<h1>Warehouse</h1>
+
+<!-- How to put python commands here? or pass the variable here? -->
+
+<form method="post" action="{{url_for('create_warehouse')}}">
+    <!-- #only works when this is here -->
+
+    <!-- CREATE DROPDOWN DISPLAYING STORES TO SELECT FROM -->
+    <div style="margin:20px">
+        <select name="storeid">
+            <option hidden disabled selected value> -- select an option -- </option>
+            {% for name in sname%}
+            {<option>{{name.id}}</option>} What to put in name?
+            <!-- #How to get selected value out to server.py? -->
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- WAREHOUSE SELECTION IS ONLY ENABLED AFTER STORE IS CHOSEN? -->
+
+    <div class="form-group">
+        <label for="Warehouse">Warehouse</label>
+        <input type="text" name="warehouse_location" />
+    </div>
+    <button type="submit" class="btn btn-secondary">Add Warehouse</button>
+</form>
+
+
+<!-- {% if warehouse_location %}
+<p>New Warehouse: {{warehouse_location}}</p>
+{%endif%} -->
+
+{% endblock %}
+
+<!-- following will print all STORESsname = Store.select()
+>>> for name in sname:
+... print(name.name)
+...
+Meng's Camera Store
+My Store
+My Other Store
+Another Store
+
+New Store Who dis
+meow
+Haberdashery -->
