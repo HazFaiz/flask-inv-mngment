@@ -26,14 +26,21 @@ def migrate():  # new
 def index():
     return render_template('index.html')
 
-# ------------------ LIST ALL STORES IN A TABLE FORMAT ----------
+# ------------------ LIST ALL STORES IN A TABLE FORMAT & DELETE INSTANCE----------
 @app.route("/stores")
 def index_stores():
     sname = Store.select()
     return render_template('index_stores.html', sname=sname)
 
 
+@app.route("/stores/<id>/delete", methods=["POST"])
+def destroy_store(id):
+    # select_store = request.form.get("deletestore")  # this will get id
+    store = Store.get_by_id(id)
+    store.delete_instance(recursive=True)
+    return redirect(url_for("index_stores"))
 # ------------------ LIST INFORMATION FOR A PARTICULAR STORE & UPDATE----------
+
 
 @app.route('/store/<id>', methods=["GET"])
 def show_store(id):

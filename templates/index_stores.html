@@ -31,10 +31,15 @@ Create a template for each page and render them accordingly -->
                 <!-- warehouses is the backref in Warehouse connecting to Store. Refer to code below. so far just 1 -->
                 <!-- name.warehouses is basically a list. can use | length to get the number of occurences in it -->
                 <!-- https://jinja.palletsprojects.com/en/2.11.x/templates/#length -->
+                <form method="POST" action="{{url_for('destroy_store', id=name.id)}}">
+            <td><button type="submit" class="btn btn-danger">Delete</button>
+                </th>
+                </form>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
 
 
 <!-- {% for name in sname%}
